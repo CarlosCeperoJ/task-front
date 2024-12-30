@@ -27,7 +27,7 @@ const Login = ({ setToken }) => {
         setError(data.message);
       }
     } catch (error) {
-      setError('Error al iniciar sesión');
+      setError(error + 'Error al iniciar sesión');
     }
   };
 
