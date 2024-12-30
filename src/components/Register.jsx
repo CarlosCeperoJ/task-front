@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -28,7 +27,7 @@ const Register = ({ setToken }) => {
         setError(data.message);
       }
     } catch (error) {
-      setError(error  + 'Error al registrar');
+      setError('Error al registrar');
     }
   };
 
