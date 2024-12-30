@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 const TaskList = ({ tasks, toggleTaskCompletion, deleteTask }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-full max-w-4xl mx-auto">
       {tasks.map(task => (
         <div
           key={task._id}
