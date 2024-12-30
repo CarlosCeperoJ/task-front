@@ -6,12 +6,9 @@ const TaskList = ({ tasks, toggleTaskCompletion, deleteTask }) => {
       {tasks.map(task => (
         <div
           key={task._id}
-          className={`bg-white p-4 rounded-lg shadow-lg ${
-            task.completed ? 'bg-green-100' : 'bg-red-100'
-          }`}
+          className={`bg-white p-4 rounded-lg shadow-lg ${task.completed ? 'bg-green-100' : 'bg-red-100'}`}
         >
-          {/* Contenedor principal con diseño responsivo */}
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div className="flex flex-wrap justify-between items-start">
             {/* Información de la tarea */}
             <div className="flex-1 min-w-0">
               <h2
@@ -27,24 +24,22 @@ const TaskList = ({ tasks, toggleTaskCompletion, deleteTask }) => {
                 {task.title}
               </h2>
               <p className="text-gray-600 break-words">{task.description}</p>
-              <p className="text-gray-500 text-sm">
-                {new Date(task.createdAt).toLocaleString()}
-              </p>
+              <p className="text-gray-500 text-sm">{new Date(task.createdAt).toLocaleString()}</p>
             </div>
 
             {/* Botones */}
-            <div className="flex flex-wrap gap-2 md:flex-nowrap md:gap-4">
+            <div className="flex space-x-2 mt-4 md:mt-0">
               <button
                 className={`p-2 rounded-lg ${
                   task.completed ? 'bg-yellow-500' : 'bg-green-500'
-                } text-white w-full md:w-auto`}
+                } text-white`}
                 onClick={() => toggleTaskCompletion(task._id, task.completed)}
               >
                 <i className={`fas ${task.completed ? 'fa-undo' : 'fa-check'} mr-2`}></i>
                 {task.completed ? 'Pendiente' : 'Completada'}
               </button>
               <button
-                className="bg-red-500 text-white p-2 rounded-lg w-full md:w-auto"
+                className="bg-red-500 text-white p-2 rounded-lg"
                 onClick={() => deleteTask(task._id)}
               >
                 <i className="fas fa-trash mr-2"></i> Eliminar
@@ -72,6 +67,5 @@ TaskList.propTypes = {
 };
 
 export default TaskList;
-
 
 
