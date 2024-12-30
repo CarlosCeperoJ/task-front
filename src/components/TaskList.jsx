@@ -8,9 +8,9 @@ const TaskList = ({ tasks, toggleTaskCompletion, deleteTask }) => {
           key={task._id}
           className={`bg-white p-4 rounded-lg shadow-lg ${task.completed ? 'bg-green-100' : 'bg-red-100'}`}
         >
-          <div className="flex flex-wrap justify-between items-start">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             {/* Información de la tarea */}
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 mb-4 md:mb-0">
               <h2
                 className={`text-xl font-bold text-gray-800 break-words ${
                   task.completed ? 'line-through' : ''
@@ -23,12 +23,12 @@ const TaskList = ({ tasks, toggleTaskCompletion, deleteTask }) => {
                 )}
                 {task.title}
               </h2>
-              <p className="text-gray-600 break-words">{task.description}</p>
+              <p className="text-gray-600 break-words overflow-wrap break-word">{task.description}</p>
               <p className="text-gray-500 text-sm">{new Date(task.createdAt).toLocaleString()}</p>
             </div>
 
             {/* Botones */}
-            <div className="flex space-x-2 mt-4 md:mt-0">
+            <div className="flex space-x-2">
               <button
                 className={`p-2 rounded-lg ${
                   task.completed ? 'bg-yellow-500' : 'bg-green-500'
@@ -67,5 +67,4 @@ TaskList.propTypes = {
 };
 
 export default TaskList;
-
 
