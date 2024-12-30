@@ -11,7 +11,7 @@ const TaskList = ({ tasks, toggleTaskCompletion, deleteTask }) => {
           }`}
         >
           {/* Contenedor principal con diseño responsivo */}
-          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
             {/* Información de la tarea */}
             <div className="flex-1 min-w-0">
               <h2
@@ -33,7 +33,7 @@ const TaskList = ({ tasks, toggleTaskCompletion, deleteTask }) => {
             </div>
 
             {/* Botones */}
-            <div className="flex gap-2 flex-wrap md:flex-nowrap">
+            <div className="flex flex-wrap gap-2 md:flex-nowrap md:gap-4">
               <button
                 className={`p-2 rounded-lg ${
                   task.completed ? 'bg-yellow-500' : 'bg-green-500'
@@ -72,5 +72,6 @@ TaskList.propTypes = {
 };
 
 export default TaskList;
+
 
 
