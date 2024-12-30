@@ -27,7 +27,7 @@ const Register = ({ setToken }) => {
         setError(data.message);
       }
     } catch (error) {
-      setError(error + 'Error al registrar');
+      setError('Error al registrar');
     }
   };
 
