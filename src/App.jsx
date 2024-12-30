@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
@@ -12,6 +12,7 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [message, setMessage] = useState('');
   const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const navigate = useNavigate();
 
   // Función para obtener las tareas desde el backend
   const fetchTasks = async () => {
@@ -22,10 +23,14 @@ function App() {
           'Authorization': `Bearer ${token}`,
         },
       });
+      if (!response.ok) {
+        throw new Error('Error fetching tasks');
+      }
       const data = await response.json();
       setTasks(data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
+      setTasks([]); // Asegúrate de que tasks sea un array vacío en caso de error
     }
   };
 
@@ -40,6 +45,9 @@ function App() {
         },
         body: JSON.stringify({ title, description }),
       });
+      if (!response.ok) {
+        throw new Error('Error adding task');
+      }
       const data = await response.json();
       setTasks([...tasks, data]);
       setMessage('Tarea agregada exitosamente');
@@ -52,12 +60,15 @@ function App() {
   // Función para eliminar una tarea
   const deleteTask = async (id) => {
     try {
-      await fetch(`https://task-backend-ueoa.onrender.com/api/tasks/${id}`, {
+      const response = await fetch(`https://task-backend-ueoa.onrender.com/api/tasks/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
+      if (!response.ok) {
+        throw new Error('Error deleting task');
+      }
       setTasks(tasks.filter(task => task._id !== id));
       setMessage('Tarea eliminada exitosamente');
       setTimeout(() => setMessage(''), 3000); // Limpiar el mensaje después de 3 segundos
@@ -77,6 +88,9 @@ function App() {
         },
         body: JSON.stringify({ completed: !completed }),
       });
+      if (!response.ok) {
+        throw new Error('Error toggling task completion');
+      }
       const data = await response.json();
       setTasks(tasks.map(task => (task._id === id ? data : task)));
     } catch (error) {
@@ -86,18 +100,20 @@ function App() {
 
   // Usar useEffect para obtener tareas al cargar el componente
   useEffect(() => {
-    if (token) {
-      fetchTasks();
+    if (!token) {
+      navigate('/login'); // Redirige al login si no hay token
+    } else {
+      fetchTasks(); // Obtiene las tareas si hay token
     }
-  }, [token]); // El array vacío asegura que solo se ejecute una vez al montar el componente
+  }, [token, navigate]); // El array vacío asegura que solo se ejecute una vez al montar el componente
 
   // Filtrar tareas según el estado
-  const filteredTasks = tasks.filter(task => {
+  const filteredTasks = Array.isArray(tasks) ? tasks.filter(task => {
     if (filter === 'all') return true;
     if (filter === 'completed') return task.completed;
     if (filter === 'pending') return !task.completed;
     return true;
-  });
+  }) : [];
 
   return (
     <Router>
