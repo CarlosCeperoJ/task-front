@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
@@ -116,63 +116,61 @@ function App() {
   }) : [];
 
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-        <Routes>
-          <Route path="/login" element={<Login setToken={setToken} />} />
-          <Route path="/register" element={<Register setToken={setToken} />} />
-          <Route path="/" element={token ? (
-            <>
-              <h1 className="text-4xl font-bold text-center my-4">Lista de Tareas</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+      <Routes>
+        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/register" element={<Register setToken={setToken} />} />
+        <Route path="/" element={token ? (
+          <>
+            <h1 className="text-4xl font-bold text-center my-4">Lista de Tareas</h1>
 
-              {message && (
-                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 text-center">
-                  {message}
-                </div>
-              )}
-
-              <div className="mb-4 text-center">
-                <button
-                  className="bg-blue-500 text-white p-2 rounded-lg"
-                  onClick={() => setShowModal(true)}
-                >
-                  <i className="fas fa-plus mr-2"></i> Agregar Tarea
-                </button>
+            {message && (
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 text-center">
+                {message}
               </div>
+            )}
 
-              <div className="mb-4 text-center space-x-2">
-                <button
-                  className={`p-2 rounded-lg ${filter === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                  onClick={() => setFilter('all')}
-                >
-                  Todas
-                </button>
-                <button
-                  className={`p-2 rounded-lg ${filter === 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                  onClick={() => setFilter('completed')}
-                >
-                  Completadas
-                </button>
-                <button
-                  className={`p-2 rounded-lg ${filter === 'pending' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                  onClick={() => setFilter('pending')}
-                >
-                  Pendientes
-                </button>
-              </div>
+            <div className="mb-4 text-center">
+              <button
+                className="bg-blue-500 text-white p-2 rounded-lg"
+                onClick={() => setShowModal(true)}
+              >
+                <i className="fas fa-plus mr-2"></i> Agregar Tarea
+              </button>
+            </div>
 
-              <div className="border-t border-gray-300 mt-4"></div>
+            <div className="mb-4 text-center space-x-2">
+              <button
+                className={`p-2 rounded-lg ${filter === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                onClick={() => setFilter('all')}
+              >
+                Todas
+              </button>
+              <button
+                className={`p-2 rounded-lg ${filter === 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                onClick={() => setFilter('completed')}
+              >
+                Completadas
+              </button>
+              <button
+                className={`p-2 rounded-lg ${filter === 'pending' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                onClick={() => setFilter('pending')}
+              >
+                Pendientes
+              </button>
+            </div>
 
-              <TaskList tasks={filteredTasks} toggleTaskCompletion={toggleTaskCompletion} deleteTask={deleteTask} />
+            <div className="border-t border-gray-300 mt-4"></div>
 
-              <TaskForm addTask={addTask} showModal={showModal} setShowModal={setShowModal} />
-            </>
-          ) : (
-            <Navigate to="/login" />
-          )} />
-        </Routes>
-      </div>
-    </Router>
+            <TaskList tasks={filteredTasks} toggleTaskCompletion={toggleTaskCompletion} deleteTask={deleteTask} />
+
+            <TaskForm addTask={addTask} showModal={showModal} setShowModal={setShowModal} />
+          </>
+        ) : (
+          <Navigate to="/login" />
+        )} />
+      </Routes>
+    </div>
   );
 }
 
