@@ -98,6 +98,13 @@ function App() {
     }
   };
 
+  // Función para cerrar sesión
+  const logout = () => {
+    localStorage.removeItem('token');
+    setToken('');
+    navigate('/login');
+  };
+
   // Usar useEffect para obtener tareas al cargar el componente
   useEffect(() => {
     if (!token) {
@@ -136,6 +143,12 @@ function App() {
                 onClick={() => setShowModal(true)}
               >
                 <i className="fas fa-plus mr-2"></i> Agregar Tarea
+              </button>
+              <button
+                className="bg-red-500 text-white p-2 rounded-lg ml-4"
+                onClick={logout}
+              >
+                <i className="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
               </button>
             </div>
 
