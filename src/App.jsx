@@ -124,6 +124,12 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+      <button
+        className="fixed top-4 right-4 bg-red-500 text-white p-2 rounded-lg"
+        onClick={logout}
+      >
+        <i className="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
+      </button>
       <Routes>
         <Route path="/login" element={<Login setToken={setToken} />} />
         <Route path="/register" element={<Register setToken={setToken} />} />
@@ -143,12 +149,6 @@ function App() {
                 onClick={() => setShowModal(true)}
               >
                 <i className="fas fa-plus mr-2"></i> Agregar Tarea
-              </button>
-              <button
-                className="bg-red-500 text-white p-2 rounded-lg ml-4"
-                onClick={logout}
-              >
-                <i className="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
               </button>
             </div>
 
