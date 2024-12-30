@@ -11,10 +11,10 @@ const TaskList = ({ tasks, toggleTaskCompletion, deleteTask }) => {
                 {task.completed ? <i className="fas fa-check-circle mr-2 text-green-500"></i> : <i className="fas fa-times-circle mr-2 text-red-500"></i>}
                 {task.title}
               </h2>
-              <p className="text-gray-600 break-words">{task.description}</p>
+              <p className="text-gray-600 break-words overflow-wrap break-word">{task.description}</p>
               <p className="text-gray-500 text-sm">{new Date(task.createdAt).toLocaleString()}</p>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 mt-4 md:mt-0">
               <button
                 className={`p-2 rounded-lg ${task.completed ? 'bg-yellow-500' : 'bg-green-500'} text-white`}
                 onClick={() => toggleTaskCompletion(task._id, task.completed)}
